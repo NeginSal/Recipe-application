@@ -1,8 +1,9 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useFetch } from '../../hooks/useFetch'
+import { Navigate, useNavigate } from "react-router-dom";
 import './Create.css'
 
-const Create =()=> {  
+const Create = () => {
   const [title, setTitle] = useState('')
   const [method, setMethod] = useState('')
   const [cookingTime, setCookingTime] = useState('')
@@ -11,7 +12,9 @@ const Create =()=> {
   const ingredientInput = useRef(null)
 
   const { postData, data, error } = useFetch('http://localhost:3000/recipes', 'POST')
-  
+
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault()
     postData({ title, ingredients, method, cookingTime: cookingTime + ' minutes' })
@@ -27,6 +30,14 @@ const Create =()=> {
     setNewIngredient('')
     ingredientInput.current.focus()
   }
+  useEffect(() => {
+    if (data) {
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    }
+  }, [data])
+
 
 
   return (
@@ -36,8 +47,8 @@ const Create =()=> {
 
         <label>
           <span>Recipe title:</span>
-          <input 
-            type="text" 
+          <input
+            type="text"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
             required
@@ -47,8 +58,8 @@ const Create =()=> {
         <label>
           <span>Recipe Ingredients:</span>
           <div className="ingredients">
-            <input 
-              type="text" 
+            <input
+              type="text"
               onChange={(e) => setNewIngredient(e.target.value)}
               value={newIngredient}
               ref={ingredientInput}
@@ -60,7 +71,7 @@ const Create =()=> {
 
         <label>
           <span>Recipe Method:</span>
-          <textarea 
+          <textarea
             onChange={(e) => setMethod(e.target.value)}
             value={method}
             required
@@ -69,11 +80,11 @@ const Create =()=> {
 
         <label>
           <span>Cooking time (minutes):</span>
-          <input 
-            type="number" 
+          <input
+            type="number"
             onChange={(e) => setCookingTime(e.target.value)}
             value={cookingTime}
-            required 
+            required
           />
         </label>
 
