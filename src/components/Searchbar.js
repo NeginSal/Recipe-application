@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Search.css'
+import './Searchbar.css'
 const Search = () => {
 
     const [term, setTerm] = useState('')
@@ -8,7 +8,7 @@ const Search = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        Navigate(`/search?q={$term}`)
+        Navigate(`/search?q=${term}`)
 
     }
 
