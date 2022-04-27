@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Navbar.css'
 import Searchbar from './Searchbar';
+import { useContext } from 'react';
 
 const Navbar = () => {
     return ( 
