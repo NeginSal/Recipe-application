@@ -5,8 +5,8 @@ import { useTheme } from '../hooks/useTheme'
 
 const Navbar = () => {
 
-    const { color} = useTheme()
-
+    const { color } = useTheme()
+ 
     return (
         <div className='navbar' style={{ background: color }}>
             <nav>
