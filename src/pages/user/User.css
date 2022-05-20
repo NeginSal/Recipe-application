@@ -15,7 +15,7 @@
   .recipe li {
     list-style-type: none;
     margin-right: 10px;
-    color: #777;
+    
   }
   .recipe li::after {
     content: ",";

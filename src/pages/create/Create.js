@@ -5,31 +5,19 @@ import './Create.css'
 
 const Create = () => {
   const [title, setTitle] = useState('')
-  const [method, setMethod] = useState('')
-  const [cookingTime, setCookingTime] = useState('')
-  const [newIngredient, setNewIngredient] = useState('')
-  const [ingredients, setIngredients] = useState([])
-  const ingredientInput = useRef(null)
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
 
-  const { postData, data, error } = useFetch('http://localhost:3000/recipes', 'POST')
 
+  const { postData, data } = useFetch('https://jsonplaceholder.typicode.com/users', 'POST')
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    postData({ title, ingredients, method, cookingTime: cookingTime + ' minutes' })
+    postData({ title, email, phone })
+    console.log({ title, email, phone })
   }
 
-  const handleAdd = (e) => {
-    e.preventDefault()
-    const ing = newIngredient.trim()
-
-    if (ing && !ingredients.includes(ing)) {
-      setIngredients(prevIngredients => [...prevIngredients, newIngredient])
-    }
-    setNewIngredient('')
-    ingredientInput.current.focus()
-  }
   useEffect(() => {
     if (data) {
       setTimeout(() => {
@@ -37,8 +25,6 @@ const Create = () => {
       }, 1000);
     }
   }, [data])
-
-
 
   return (
     <div className="create">
@@ -56,34 +42,21 @@ const Create = () => {
         </label>
 
         <label>
-          <span>Recipe Ingredients:</span>
-          <div className="ingredients">
-            <input
-              type="text"
-              onChange={(e) => setNewIngredient(e.target.value)}
-              value={newIngredient}
-              ref={ingredientInput}
-            />
-            <button onClick={handleAdd} className="btn">add</button>
-          </div>
-        </label>
-        <p>Current ingredients: {ingredients.map(i => <em key={i}>{i}, </em>)}</p>
-
-        <label>
-          <span>Recipe Method:</span>
-          <textarea
-            onChange={(e) => setMethod(e.target.value)}
-            value={method}
+          <span>Recipe Email:</span>
+          <input
+            type="text"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
             required
           />
         </label>
 
         <label>
-          <span>Cooking time (minutes):</span>
+          <span>Phone:</span>
           <input
-            type="number"
-            onChange={(e) => setCookingTime(e.target.value)}
-            value={cookingTime}
+            type="text"
+            onChange={(e) => setPhone(e.target.value)}
+            value={phone}
             required
           />
         </label>
@@ -91,6 +64,7 @@ const Create = () => {
         <button className="btn">submit</button>
       </form>
     </div>
+
   )
 }
 export default Create;
